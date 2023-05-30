@@ -1,0 +1,45 @@
+<div class="container">
+    <h1 class="pb-3">Create New Product</h1>
+    <div class="row">
+        <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+             <!--MANUFACTURERS LISTINGS-->
+             <div>
+                <label for="manufacturer mt-4"><strong>Manufacturer</strong></label>
+                <select type="text" 
+                    class="form-control" 
+                    ngModel
+                    placeholder="Select a Manufacturer"
+                    required
+                    name="existingManufacturer"
+                    (click)="manufacturerSelected()"
+                    >
+                    <option value="">Select a Manufacturer</option>
+                    <option  value="" >None</option>
+                    <option  *ngFor="let man of manufacturers" >{{man}}</option>
+                </select>
+            </div>
+            <div>
+                <label for="manufacturer">Manufacturer</label>
+                <input type="text" 
+                       placeholder="Enter New Manufacturer"
+                       class="form-control d-flex" 
+                       ngModel 
+                       [disabled]="manufacturerSelectedflag"
+                       name="manufacturer" 
+                       required />
+            </div>
+            <div>
+                <label for="product">Product</label>
+                <input type="text" 
+                       placeholder="Enter New Product Name/Description"
+                       class="form-control d-flex" 
+                       ngModel 
+                       name="product" 
+                       required />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary rounded d-flex my-3">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

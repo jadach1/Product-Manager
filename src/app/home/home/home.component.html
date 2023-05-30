@@ -1,0 +1,40 @@
+<div class="container">
+
+  <nav class="navbar navbar-expand-sm navbar-dark  bg-dark fixed-top mb-5">
+    <div class="container-fluid">
+      <div class="navbar-brand ">ACCOUNTING INVENTORY MANAGER</div>
+
+      <a class="navbar-toggler btn" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</a>
+
+      <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse ">
+        <ul class="navbar-nav ">
+          <li class="nav-item" routerLink="home"><a class="nav-link">HOME</a></li>
+          <li class="nav-item">
+            <div ngbDropdown  class="d-inline-block">
+               <a class="nav-link" ngbDropdownToggle>WAREHOUSE</a>
+               <div ngbDropdownMenu >
+                <button ngbDropdownItem (click)="openTransactionDialog('Return')">RETURN</button>
+                <button ngbDropdownItem (click)="openTransactionDialog('Pick')"  >PICK  </button>
+                <button ngbDropdownItem>RETURNS AND PICKS LISTINGS</button>
+                <button ngbDropdownItem (click)="openNewProductDialog()">New Product</button>
+               </div>
+            </div>
+           </li>
+          <li class="nav-item"><a class="nav-link" (click)="toggleProjects()">{{buttonTitle}}</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+</div>
+<div class="container mt-5">
+    <div class="row mt-5">
+     <div class="col-lg-7 col-12 mt-5">
+        <app-warehouse-main-table></app-warehouse-main-table>
+     </div>
+    <div *ngIf="activeProjects" class="col-lg-4 col-0 offset-1 mt-5 ">
+      <app-project-main-table></app-project-main-table>
+    </div>
+    </div>
+</div>

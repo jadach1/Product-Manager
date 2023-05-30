@@ -1,0 +1,14 @@
+.return {
+    background: red;
+    color: white;
+}
+
+.pick {
+    background: blue;
+    color: white;
+}
+
+.delivery {
+    background: green;
+    color: white;
+}

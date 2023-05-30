@@ -1,0 +1,199 @@
+<div mat-dialog-content id="pickAndReturn" class="container"
+    [ngClass]="{overlay1: title === 'Return',
+                overlay2: title === 'Pick',
+                overlay3: title === 'Delivery',}"
+>
+    <div class="card" style="opacity: 0.9" >
+        <div class="card-header">
+            <h1 class="text-center" [ngClass]=" {'bg-danger' : title==='Return',
+                                                'bg-primary' : title==='Pick'}">{{title | uppercase }} FORM</h1>
+        </div>
+        <div class="card-body bg-light mt-1" >
+            <form class="form" #myForm="ngForm" (ngSubmit)="onSubmit()">
+                <div class="row bg-secondary form-group">
+                    <!--OPERATOR DROP DOWN-->
+                    <div class="">
+                        <label for="operator"><strong>Operator</strong></label>
+                        <select type="text"
+                                class="form-control"
+                                placeholder="select an operator"
+                                required
+                                [(ngModel)]="formTransaction.operator"
+                                #operator = "ngModel"
+                                name="operator">
+                                <option  value="" >Select an Operator</option>
+                                <option *ngFor="let name of operators" >{{name}}</option>
+                        </select>
+                        <!-- ERRORS -->
+                        <div *ngIf="(fullQty.touched || tq_Qty.touched || halfQty.touched || partQty.touched) && signUpForm.controls['operator'].errors?.['required'] ">
+                          <p class="error">Don't Forget An Operator</p>
+                        </div>
+                        <div *ngIf="operator.touched && operator.errors?.['required']  ">
+                          <p class="error">Please Select An Operator</p>
+                        </div>
+                    </div>
+
+                    <!--FROM WHERE ARE WE COLLECTING-->
+                    <div >
+                        <label for="from"><strong>From Where</strong></label>
+                        <select type="text"
+                               class="form-control"
+                               placeholder="Select a Location"
+                               required
+                               [(ngModel)]="formTransaction.where"
+                               #from = "ngModel"
+                               (click)="getInventoryFromLocation()"
+                               name="from">
+                               <option  value="" >Select a Location</option>
+                               <option *ngFor="let place of locationFrom" >{{place}}</option>
+                        </select>
+                        <!---- ERRORS  ---->
+                        <div *ngIf="from.touched && !locationSelected && formTransaction.where !== '' "><p class="error">ERROR.  CANNOT SELECT LOCATION WITH NO MATERIALS</p></div>
+                        <div *ngIf="from.touched && from.errors?.['required']"><p class="error">Please Select Valid Location</p></div>
+                    </div>
+
+                    <!-- WHERE ARE WE GOING-->
+                    <div *ngIf="!returnFlag">
+                        <label for="destination"><strong>To Where</strong></label>
+                        <select type="text"
+                               class="form-control"
+                               placeholder="Select a destination"
+                               required
+                               [(ngModel)]="formTransaction.destination"
+                               #destination = "ngModel"
+                               name="destination">
+                               <option  value="" >Select a destination</option>
+                               <option *ngFor="let place of locationsTo" >{{place}}</option>
+                        </select>
+                        <!-- ERRORS -->
+                        <div *ngIf="(fullQty.touched || tq_Qty.touched || halfQty.touched || partQty.touched) && destination.errors?.['required'] ">
+                          <p class="error">Don't Forget A Destination</p>
+                        </div>
+                        <div *ngIf="destination.touched && destination.errors?.['required']  ">
+                          <p class="error">Please Select A Destination</p>
+                        </div>
+                    </div>
+
+                    <!--WHEN DID THIS HAPPEN -->
+                    <div class=" mt-4">
+                        <label for="date" class="mx-2"><Strong>Date  </Strong></label>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Choose a date</mat-label>
+                            <input  matInput
+                                    [matDatepicker]="picker"
+                                    required
+                                    name="date"
+                                    [(ngModel)]="formTransaction.date"
+                                    #date = "ngModel">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        <!-- ERRORS -->
+                            <div *ngIf="(fullQty.touched || tq_Qty.touched || halfQty.touched || partQty.touched) && date.errors?.['required'] ">
+                              <p class="error">Don't Forget A Date</p>
+                            </div>
+                            <div *ngIf="date.touched && date.errors?.['required']  ">
+                              <p class="error">Please Select A Date</p>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row bg-success form-group">
+                    <!--MANUFACTURERS LISTINGS-->
+                    <div >
+                        <label for="manufacturer mt-4"><strong>Manufacturer</strong></label>
+                        <select type="text"
+                            class="form-control"
+                            placeholder="Select a Manufacturer"
+                            required
+                            [(ngModel)]="formTransaction.manufacturer"
+                            #manufacturer = "ngModel"
+                            name="manufacturer"
+                            [disabled]="!locationSelected"
+                            (click)="manufacturerSelected()">
+                            <option  value="" >Select a Manufacturer</option>
+                            <option  *ngFor="let man of manufacturers" >{{man}}</option>
+                        </select>
+                         <!-- ERRORS -->
+                        <div *ngIf="manufacturer.touched && manufacturer.errors?.['required']  ">
+                          <p class="error">Please Select A Manufacturer/p>
+                        </div>
+                    </div>
+
+                    <!--PRODUCTS LISTINGS-->
+                    <div >
+                        <label for="product"><strong>Products</strong></label>
+                        <select type="text"
+                                class="form-control"
+                                placeholder="Select a Product"
+                                required
+                                [disabled]="!manuFlag"
+                                [(ngModel)]="formTransaction.product"
+                                #product = "ngModel"
+                                (click)="productSelected()"
+                                name="product">
+                            <option  value=""> Select a Product </option>
+                            <option *ngFor="let prod of products" >{{prod}}</option>
+                        </select>
+                         <!-- ERRORS -->
+                        <div *ngIf="product.touched && product.errors?.['required']  ">
+                          <p class="error">Please Select A Product</p>
+                        </div>
+                    </div>
+
+                    <!--QUANTITY-->
+                    <div class="bg-primary mt-2" id="quantity" >
+                        <h3 class="text-center">Quantities</h3>
+                        <div class="row" >
+
+                            <div class="col-md-3">
+                                <label for="full"><strong>Full</strong> <span>  in stock: {{productQty.full}} </span></label>
+                                <input type="number"
+                                       name="full"
+                                       class="form-control mb-2"
+                                       [(ngModel)]="formTransaction.full"
+                                       #fullQty="ngModel"
+                                       [disabled]="!productFlag" >
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="threeQuarters"><strong>3/4</strong> <span>  in stock: {{productQty.threeQuarters}} </span></label>
+                                <input type="number"
+                                       name="threeQuarters"
+                                       class="form-control mb-2"
+                                       [(ngModel)]="formTransaction.tQ"
+                                       #tq_Qty="ngModel"
+                                       [disabled]="!productFlag">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="half"><strong>Half</strong> <span>  in stock: {{productQty.half}} </span></label>
+                                <input type="number"
+                                       name="half"
+                                       class="form-control mb-2"
+                                       [(ngModel)]="formTransaction.half"
+                                       #halfQty="ngModel"
+                                       [disabled]="!productFlag">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="part"><strong>Part</strong> <span>  in stock: {{productQty.part}} </span></label>
+                                <input type="number"
+                                       name="part"
+                                       class="form-control mb-2"
+                                       [(ngModel)]="formTransaction.part"
+                                       #partQty="ngModel"
+                                       [disabled]="!productFlag">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div mat-dialog-actions class="card-footer d-flex bg-light mt-5 justify-content-center">
+                    <button type="submit" class="btn btn-primary rounded" [disabled]="myForm.invalid || !locationSelected">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

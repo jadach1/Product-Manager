@@ -1,0 +1,38 @@
+#quantity .form-control {
+    width: 50%;
+}
+
+.mat-dialog-content {
+    overflow-y: auto;
+}
+
+#pickAndReturn{
+    height: 1200px;
+}
+
+.overlay1 {
+    background: url(../../../assets/Pictures/constructionOne.jpg);
+}
+
+.overlay2 {
+    background: url(../../../assets/Pictures/constructionTwo.jpeg);
+    opacity: 1;
+    background-repeat: no-repeat;
+}
+
+.overlay3 {
+    background: url(../../../assets/Pictures/constructionThree.jpg);
+}
+
+.error {
+  color: rgba(175, 7, 7, 0.483);
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
