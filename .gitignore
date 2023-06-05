@@ -4,3 +4,6 @@ dist
 .angular
 .vscode
 .editorconfig
+.firebaserc
+firebase.json
+
