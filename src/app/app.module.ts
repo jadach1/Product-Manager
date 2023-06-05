@@ -4,6 +4,7 @@ import {appRouterModule} from '../app/router/router.module';
 import {customFormModule} from '../app/Forms/module/form.module'
 
 import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap'
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -27,11 +28,12 @@ import { ProjectMainTableComponent } from './projects/project-main-table/project
     BrowserModule,
     BrowserAnimationsModule,
     appRouterModule,
+    MatExpansionModule,
     MatCardModule,
     NgbCarouselModule,
     NgbDropdownModule,
     NgbCollapseModule,
-    customFormModule
+    customFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

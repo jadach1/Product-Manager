@@ -1,30 +1,44 @@
-<div class="table-responsive">
-    <table class="table border border-primary bg-light">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col-2">WAREHOUSE</th>
-          <th scope="col-2">QUANTITY</th>
-          <th scope="col-2"></th>
-          <th scope="col-2"></th>
-        </tr>
-      </thead>
+<mat-accordion class="h-100">
+  <mat-expansion-panel class="bg-dark">
+    <mat-expansion-panel-header class="bg-light d-height-sm">
+      <mat-panel-title>
+        Warehouse Table
+      </mat-panel-title>
+      <mat-panel-description>
+        Displays a table of Inventory in the Warehouse
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <!--WAREHOUSE TABLE-->
+    <div class="table-responsive">
+      <table class="table border border-primary bg-light">
         <thead class="table-dark">
           <tr>
-            <th scope="col">Product Name</th>
-            <th scope="col">FULL</th>
-            <th scope="col">3/4</th>
-            <th scope="col">HALF</th>
-            <th scope="col">PART</th>
+            <th scope="col-2">WAREHOUSE INVENTORY</th>
+            <th scope="col-2">QUANTITY</th>
+            <th scope="col-2"></th>
+            <th scope="col-2"></th>
           </tr>
         </thead>
-        <tbody >
-          <tr *ngFor="let item of warehouseProducts()" >
-            <th scope="row">{{item.productName}}</th>
-            <th scope="row">{{item.quantity.full}}</th>
-            <th scope="row">{{item.quantity.threeQuarters}}</th>
-            <th scope="row">{{item.quantity.half}}</th>
-            <th scope="row">{{item.quantity.part}}</th>
-          </tr>
-        </tbody>
-      </table>
-</div>
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">FULL</th>
+              <th scope="col">3/4</th>
+              <th scope="col">HALF</th>
+              <th scope="col">PART</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let item of warehouseProducts()" >
+              <th scope="row">{{item.productName}}</th>
+              <th scope="row">{{item.quantity.full}}</th>
+              <th scope="row">{{item.quantity.threeQuarters}}</th>
+              <th scope="row">{{item.quantity.half}}</th>
+              <th scope="row">{{item.quantity.part}}</th>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+

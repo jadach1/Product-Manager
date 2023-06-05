@@ -1,13 +1,12 @@
 .navbar {
     border-bottom: turquoise solid 2px;
-    opacity: .7;
-    height: 50px;
+    opacity: 1;
 }
 
 .navbar :hover {
     cursor: pointer;
 }
 
-.navbar-brand :hover {
-    cursor: not-allowed;
+.navbar-brand {
+    display: contents;
 }

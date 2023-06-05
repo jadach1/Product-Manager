@@ -30,6 +30,7 @@ export class HomeComponent implements OnDestroy{
 
 
   openTransactionDialog(selection: string): void {
+    this.menuCollapse();
     const dialogRef = this.dialog.open(PicksReturnsComponent,
                                       {data: {selector: selection}})
       dialogRef.afterClosed().subscribe( result => {
@@ -37,6 +38,7 @@ export class HomeComponent implements OnDestroy{
   }
 
   openNewProductDialog(): void {
+    this.menuCollapse();
     const dialogRef = this.dialog.open(NewProductComponent)
       dialogRef.afterClosed().subscribe( result => {
       })
@@ -54,5 +56,10 @@ export class HomeComponent implements OnDestroy{
     setTimeout( ()=> {
       this.activeProjects = true, 500
     });
+  }
+
+  //Toggles the menu-> collapse
+  menuCollapse() {
+    this.isMenuCollapsed = !this.isMenuCollapsed
   }
 }

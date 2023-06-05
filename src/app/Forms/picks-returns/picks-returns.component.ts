@@ -73,25 +73,34 @@ export class PicksReturnsComponent implements OnInit {
     THE WAREHOUSE OR A PROJECT.
     And what inventory is on hand at the location */
   getInventoryFromLocation() {
-    const location = this.signUpForm.controls['from'].value;
+    // Find out where it is coming from
+     const location = this.signUpForm.controls['from'].value;
+
+     //Because we are selecting a new location, we must reset all flags and lists
+     this.manuFlag = false;
+     this.productFlag = false;
+     this.products = [];
+     this.manufacturers = [];
+     
     this.locationSelected = false;
+
     //If we dont have a location, exit
     if (location === undefined || location === '') return;
 
     //If we are getting products from the warehouse
-    if (location === 'WAREHOUSE') {
+    if (location === 'WAREHOUSE') 
       this.invetoryOnHand = this.invSer.getWareHouseInventory();
-      this.locationSelected = true;
-    } else {
-    //Products form a Project
+    else 
+    //Get products form a Project
       this.invetoryOnHand = this.projServ.getProjectInventory(location);
-    }
-
+    
+    // Check if there is any inventory
     if(this.invetoryOnHand.size > 0)
     {
       this.manufacturers = [...this.invetoryOnHand.keys()];
       this.locationSelected = true;
     }
+    // If not, turn off location flag
     else{
       this.msgService.sendMessage(['no-products'])
       this.locationSelected = false;
@@ -100,6 +109,9 @@ export class PicksReturnsComponent implements OnInit {
 
   /*THIS FUNCTION WILL GET A HOST OF PRODUCTS BASED ON THE MANUFACTURER SELECTED */
   manufacturerSelected() {
+
+    //Reset Products first.  We will always return either new products or nothing
+     this.products = [];
 
     //Check to see if manufacturer has been selected
      let manufacturer = this.signUpForm.controls['manufacturer'].value;
@@ -129,12 +141,9 @@ export class PicksReturnsComponent implements OnInit {
            this.manuFlag = true;
         }  // else
     }
-     // If manufacturer has been deslected, set the flag to false
+     // If manufacturer has been de-selected, set the flag to false
     else {
        this.manuFlag = false;
-
-       //Reset Products first
-        this.products = [];
     }
   }
 

@@ -1,22 +1,19 @@
 <div class="container">
 
-  <nav class="navbar navbar-expand-sm navbar-dark  bg-dark fixed-top mb-5">
+  <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark mb-5">
     <div class="container-fluid">
-      <div class="navbar-brand ">ACCOUNTING INVENTORY MANAGER</div>
-
-      <a class="navbar-toggler btn" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</a>
-
+        <div class="navbar-brand">ACCOUNTING INVENTORY MANAGER  <a class="navbar-toggler btn border-light bg-info" (click)="menuCollapse()">&#9776;</a> </div>
+     
       <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse ">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav bg-dark">
           <li class="nav-item" routerLink="home"><a class="nav-link">HOME</a></li>
           <li class="nav-item">
-            <div ngbDropdown  class="d-inline-block">
+            <div ngbDropdown  class="">
                <a class="nav-link" ngbDropdownToggle>WAREHOUSE</a>
                <div ngbDropdownMenu >
-                <button ngbDropdownItem (click)="openTransactionDialog('Return')">RETURN</button>
-                <button ngbDropdownItem (click)="openTransactionDialog('Pick')"  >PICK  </button>
-                <button ngbDropdownItem>RETURNS AND PICKS LISTINGS</button>
-                <button ngbDropdownItem (click)="openNewProductDialog()">New Product</button>
+                <button ngbDropdownItem (click)="openTransactionDialog('Return')">RETURN INVENTORY</button>
+                <button ngbDropdownItem (click)="openTransactionDialog('Pick')"  >INVENTORY PICKING ORDER</button>
+                <!-- <button ngbDropdownItem (click)="openNewProductDialog()">New Product</button> -->   
                </div>
             </div>
            </li>
@@ -30,10 +27,10 @@
 </div>
 <div class="container mt-5">
     <div class="row mt-5">
-     <div class="col-lg-7 col-12 mt-5">
+     <div class="col-md-6 col-12 col-sm-12 mt-5">
         <app-warehouse-main-table></app-warehouse-main-table>
      </div>
-    <div *ngIf="activeProjects" class="col-lg-4 col-0 offset-1 mt-5 ">
+    <div *ngIf="activeProjects" class="col-md-5 col-sm-12 offset-md-1 mt-5 ">
       <app-project-main-table></app-project-main-table>
     </div>
     </div>
